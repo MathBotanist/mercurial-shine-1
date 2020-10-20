@@ -1,5 +1,7 @@
 $(function () {
-    var socket = io();
+    var socket = io.connect();
 
-    io.on
-})
+    socket.on('hey', function(msg){
+        console.debug(msg)
+    });
+});
