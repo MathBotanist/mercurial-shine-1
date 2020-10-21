@@ -7,7 +7,7 @@ def connect(func):
 
     def wrapper_decorator(*args, **kwargs):
         connection = None
-        cx_Oracle.init_oracle_client(lib_dir=r".\instantclient_19_8")
+        cx_Oracle.init_oracle_client(lib_dir=r".\instantclient")
 
         try:
             connection = cx_Oracle.connect(
@@ -21,7 +21,7 @@ def connect(func):
             value = func(*args, **kwargs, connection=this.connection)
 
         except cx_Oracle.Error as error:
-            return error
+            print(error)
 
         finally:
             if connection:
@@ -32,8 +32,8 @@ def connect(func):
 @connect
 def print_command(command, connection=None):
     cur = connection.cursor()
-        for row in cur.execute(command):
-            print(row)
+    for row in cur.execute(command):
+        print(row)
 
 def main():
     print_command("select * from gadi.t_empl")
