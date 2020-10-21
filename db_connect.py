@@ -18,7 +18,7 @@ def connect(func):
             )
             print(connection.version)
 
-            value = func(*args, **kwargs, connection=this.connection)
+            value = func(*args, **kwargs, conn=connection)
 
         except cx_Oracle.Error as error:
             print(error)
@@ -30,13 +30,6 @@ def connect(func):
     return wrapper_decorator
 
 @connect
-def print_command(command, connection=None):
-    cur = connection.cursor()
-    for row in cur.execute(command):
-        print(row)
-
-def main():
-    print_command("select * from gadi.t_empl")
-
-if __name__ == "__main__":
-    main()
+def command(command, conn=None):
+    cur = conn.cursor()
+    return cur.execute(command)
