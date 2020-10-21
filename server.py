@@ -1,5 +1,6 @@
 from flask import Flask
 import socketio
+import db_connect
 
 static_files = {
     '/': 'index.html',

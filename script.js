@@ -18,18 +18,15 @@ $(function () {
     }
 
     //game
+
+    //vars
     var canvas = document.getElementById("game_canvas");
     var ctx = canvas.getContext("2d");
 
-    canvas.addEventListener('keydown', this.get_key, false);
-
-    function get_key(key){
-        var key_code = key.keyCode;
-
-        console.log(key_code)
-
-        if(key_code == 87){
-            send_command('moveup')
-        }
+    //functions
+    
+    //logic
+    if(key_code == 87){
+        send_command('moveup')
     }
 });
