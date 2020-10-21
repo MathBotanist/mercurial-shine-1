@@ -3,9 +3,12 @@ import socketio
 import db_connect
 
 static_files = {
-    '/': 'index.html',
-    '/script.js': 'script.js',
-    '/style.css': 'style.css'
+    '/': r'html\index.html',
+    '/script.js': r'client-side-scripts\script.js',
+    '/style.css': r'css\style.css',
+    '/login': r'html\login.html',
+    'login_style.css': r'css\login_style.css',
+    'login_script.js': r'client-side-scripts\login_script.js'
 }
 
 sio = socketio.Server(async_mode='threading')
