@@ -1,24 +1,42 @@
 import cx_Oracle
 import config
+import functools
 
-connection = None
-cx_Oracle.init_oracle_client(lib_dir=r".\instantclient")
+def connect(func):
+    @functools.wraps(func)
 
-try:
-    connection = cx_Oracle.connect(
-        config.username,
-        config.password,
-        config.dsn,
-        encoding=config.encoding
-    )
-    print(connection.version)
+    def wrapper_decorator(*args, **kwargs):
+        connection = None
+        cx_Oracle.init_oracle_client(lib_dir=r".\instantclient_19_8")
+
+        try:
+            connection = cx_Oracle.connect(
+                config.username,
+                config.password,
+                config.dsn,
+                encoding=config.encoding
+            )
+            print(connection.version)
+
+            value = func(*args, **kwargs, connection=this.connection)
+
+        except cx_Oracle.Error as error:
+            return error
+
+        finally:
+            if connection:
+                connection.close()
+    
+    return wrapper_decorator
+
+@connect
+def print_command(command, connection=None):
     cur = connection.cursor()
-    for row in cur.execute("select * from gadi.t_empl"):
-        print(row)
+        for row in cur.execute(command):
+            print(row)
 
-except cx_Oracle.Error as error:
-    print(error)
+def main():
+    print_command("select * from gadi.t_empl")
 
-finally:
-    if connection:
-        connection.close()
+if __name__ == "__main__":
+    main()
