@@ -2,13 +2,14 @@ import cx_Oracle
 import config
 import functools
 
+cx_Oracle.init_oracle_client(lib_dir=r".\instantclient")
+
 def connect(func):
     @functools.wraps(func)
 
     def wrapper_decorator(*args, **kwargs):
         connection = None
-        cx_Oracle.init_oracle_client(lib_dir=r".\instantclient")
-
+        
         try:
             connection = cx_Oracle.connect(
                 config.username,
@@ -16,12 +17,11 @@ def connect(func):
                 config.dsn,
                 encoding=config.encoding
             )
-            print(connection.version)
 
-            value = func(*args, **kwargs, conn=connection)
+            return func(*args, **kwargs, conn=connection)
 
         except cx_Oracle.Error as error:
-            print(error)
+            return f"error: {error}"
 
         finally:
             if connection:
@@ -31,5 +31,11 @@ def connect(func):
 
 @connect
 def command(command, conn=None):
-    cur = conn.cursor()
-    return cur.execute(command)
+    with conn.cursor() as cur:
+        out = cur.execute(command)
+        out_string = ''
+
+        for row in out:
+            out_string = f'{out_string}\n{row}'
+        
+        return out_string
