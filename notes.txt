@@ -1,0 +1,2 @@
+we have to use tcp for the game since there is
+no support of udp on browsers (even tho udp would be better for the game itself)

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import cx_Oracle
 import config
 import functools
