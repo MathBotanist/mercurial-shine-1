@@ -1,0 +1,6 @@
+The class for the narwhal is called "Agent".
+Agent must implement a go() function, which is the function that gets called when the agent is required to act. It is called every frame.
+Three types of agents:
+* slow, very strong
+* fast, kinda weak
+* controls little agents
